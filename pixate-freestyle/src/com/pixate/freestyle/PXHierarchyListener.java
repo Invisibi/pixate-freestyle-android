@@ -99,10 +99,6 @@ public class PXHierarchyListener implements OnHierarchyChangeListener {
         }
 
         OnHierarchyChangeListener currentListener = getCurrentListener(group);
-        if (currentListener instanceof PXHierarchyListener) {
-            // We've already added ours to it, so nothing more to do.
-            return;
-        }
 
         // RadioGroup check to avoid StackOverflow issues. The RadioGroup uses a
         // similar delegation technique that trigger a StackOverflow, so we
