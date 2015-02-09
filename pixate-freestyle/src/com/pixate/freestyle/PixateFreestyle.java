@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2012-present Pixate, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 package com.pixate.freestyle;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -40,6 +35,11 @@ import com.pixate.freestyle.styling.PXStylesheet.PXStyleSheetOrigin;
 import com.pixate.freestyle.util.PXLog;
 import com.pixate.freestyle.util.ViewUtil;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * <p>
  * Application developers use the static methods in this class to initialize and
@@ -51,7 +51,7 @@ import com.pixate.freestyle.util.ViewUtil;
  * the {@link android.app.Application#onCreate() onCreate()} of his
  * {@link android.app.Application Application} class. For example:
  * </p>
- * 
+ * <p>
  * <pre>
  * public void onCreate() {
  *     PixateFreestyle.init(this);
@@ -63,7 +63,7 @@ import com.pixate.freestyle.util.ViewUtil;
  * {@link android.app.Activity#onCreate(android.os.Bundle) onCreate} method. For
  * example:
  * </p>
- * 
+ * <p>
  * <pre>
  * public void onCreate(Bundle savedInstanceState) {
  *     PixateFreestyle.init(this);
@@ -76,7 +76,7 @@ import com.pixate.freestyle.util.ViewUtil;
  * attributes. Note that <code>class</code> does not contain the
  * <code>android:</code> prefix. Example:
  * </p>
- * 
+ * <p>
  * <pre>
  * &lt;Button
  *     android:id="@+id/myButton"
@@ -97,7 +97,7 @@ import com.pixate.freestyle.util.ViewUtil;
  * {@link #setStyleId(View, String)}, {@link #setStyleClass(View, String)}
  * and/or {@link #setStyle(View, String)}.
  * </p>
- * 
+ *
  * @author Bill Dawson
  */
 public class PixateFreestyle {
@@ -125,9 +125,9 @@ public class PixateFreestyle {
      * Initialize Pixate with the given {@link Context} and CSS file.
      *
      * @param context
-     * @param cssFileName The CSS file to load styles from
+     * @param css     The CSS file to load styles from
      */
-    public static void init(Context context, String cssFileName) {
+    public static void init(Context context, String css) {
         if (mAppContext == null) {
             mAppContext = context.getApplicationContext();
             // log a version
@@ -135,10 +135,10 @@ public class PixateFreestyle {
                     getApiVersion()));
         }
 
-        if (cssFileName != currentCSS.getAndSet(cssFileName)) {
+        if (css != currentCSS.getAndSet(css)) {
             // try to load the default CSS ones.
-            PXStylesheet stylesheet = PXStylesheet.getStyleSheetFromFilePath(
-                    context.getApplicationContext(), cssFileName, PXStyleSheetOrigin.APPLICATION);
+            PXStylesheet stylesheet = PXStylesheet.getStyleSheetFromCSSContent(
+                    context.getApplicationContext(), css, PXStyleSheetOrigin.APPLICATION);
             if (stylesheet != null) {
                 logErrors(stylesheet.getErrors());
             }
@@ -171,7 +171,7 @@ public class PixateFreestyle {
 
     /**
      * Initialize Pixate with the given Fragment.
-     * 
+     *
      * @param fragment
      */
     public static void init(Fragment fragment) {
@@ -184,7 +184,7 @@ public class PixateFreestyle {
 
     /**
      * Returns the Pixate Freestyle product version.
-     * 
+     *
      * @return The product version.
      */
     public static String getVersion() {
@@ -193,7 +193,7 @@ public class PixateFreestyle {
 
     /**
      * Returns the Pixate Freestyle API version.
-     * 
+     *
      * @return The API version.
      */
     public static int getApiVersion() {
@@ -236,10 +236,10 @@ public class PixateFreestyle {
      * Returns the {@link Adapter} that is nested in the given
      * {@link AdapterView}. In case the adapter is 'proxied', try to extract the
      * original {@link Adapter} from the proxy instance.
-     * 
+     *
      * @param view
      * @return The original {@link Adapter} that was set for the
-     *         {@link AdapterView} (can be null)
+     * {@link AdapterView} (can be null)
      */
     public static Adapter getAdapter(AdapterView<?> view) {
         Adapter adapter = view.getAdapter();
@@ -254,7 +254,7 @@ public class PixateFreestyle {
 
     /**
      * Styles a styleable.
-     * 
+     *
      * @param styleable
      * @see #style(Object, boolean)
      */
@@ -268,7 +268,7 @@ public class PixateFreestyle {
     /**
      * Style a styleable instance (usually a View, but can be other instances,
      * like ActionBar).
-     * 
+     *
      * @param styleable
      * @param styleChildren In case <code>true</code>, styles the children.
      */

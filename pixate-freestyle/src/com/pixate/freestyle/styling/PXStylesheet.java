@@ -82,6 +82,11 @@ public class PXStylesheet {
         return result;
     }
 
+    public static PXStylesheet getStyleSheetFromCSSContent(Context context, String css, PXStyleSheetOrigin origin) {
+        return getStyleSheetFromSource(css, origin);
+
+    }
+
     public static PXStylesheet getStyleSheetFromFilePath(Context context, String aFilePath,
             PXStyleSheetOrigin origin) {
         try {
