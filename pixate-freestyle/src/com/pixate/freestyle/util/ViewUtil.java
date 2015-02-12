@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2012-present Pixate, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.pixate.freestyle.PXHierarchyListener;
+import com.pixate.freestyle.PixateFreestyle;
 import com.pixate.freestyle.styling.PXStyleUtils;
 
 public class ViewUtil {
@@ -81,7 +82,7 @@ public class ViewUtil {
 
     /**
      * Check the View's id, then use that to find the name given to it in XML.
-     * 
+     *
      * @param view
      * @return String the name, if found, else null.
      */
@@ -113,11 +114,13 @@ public class ViewUtil {
 
         PXHierarchyListener.setFor(viewGroup);
 
-        int count = viewGroup.getChildCount();
-        for (int i = 0; i < count; i++) {
-            View child = viewGroup.getChildAt(i);
-            if (child instanceof ViewGroup) {
-                prepareViewGroupListeners((ViewGroup) child);
+        if (!PixateFreestyle.viewSetup) {
+            int count = viewGroup.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View child = viewGroup.getChildAt(i);
+                if (child instanceof ViewGroup) {
+                    prepareViewGroupListeners((ViewGroup) child);
+                }
             }
         }
     }
@@ -215,7 +218,7 @@ public class ViewUtil {
     /**
      * Returns the View's width. In case the {@link View#getWidth()} returns
      * zero, we try to get the width via the layout params.
-     * 
+     *
      * @param view
      * @return the View's width
      */
@@ -237,7 +240,7 @@ public class ViewUtil {
     /**
      * Returns the View's height. In case the {@link View#getHeight()} returns
      * zero, we try to get the height via the layout params.
-     * 
+     *
      * @param view
      * @return the View's height
      */

@@ -112,6 +112,8 @@ public class PixateFreestyle {
     private static boolean mAppInited = false;
     private static Context mAppContext = null;
 
+    public static boolean viewSetup = false;
+
     /**
      * Initialize Pixate with the given {@link Context}, using the styles in default.css.
      *
@@ -158,6 +160,7 @@ public class PixateFreestyle {
             // content.
             View decorView = activity.getWindow().getDecorView();
             ViewUtil.prepareViewGroupListeners((ViewGroup) decorView);
+            viewSetup = true;
 
             // We have to get to the tabs in case the ActionBar mode has them
             // enabled.
